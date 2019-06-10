@@ -31,5 +31,8 @@ public class Instance {
     @DBRef
     private Event event;
 
+    @DBRef
+    private EntryList entryList;
+
     private String version;
 }

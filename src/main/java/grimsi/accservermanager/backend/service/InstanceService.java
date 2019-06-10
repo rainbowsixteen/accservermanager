@@ -32,6 +32,9 @@ public class InstanceService {
     EventService eventService;
 
     @Autowired
+    EntryListService entryListService;
+
+    @Autowired
     FileSystemService fileSystemService;
 
     @Autowired
@@ -67,6 +70,7 @@ public class InstanceService {
 
         instanceDto = convertToDto(instance);
         instanceDto.setEvent(eventService.findById(instanceDto.getEvent().getId()));
+        instanceDto.setEntryList(entryListService.findById(instanceDto.getEntryList().getId()));
 
         checkIfPortsAreInUse(instanceDto);
 
@@ -89,6 +93,7 @@ public class InstanceService {
         InstanceDto oldInstanceDto = findById(id);
 
         newInstanceDto.setEvent(eventService.findById(newInstanceDto.getEvent().getId()));
+        newInstanceDto.setEntryList(entryListService.findById(newInstanceDto.getEntryList().getId()));
         newInstanceDto.setRestartRequired(true);
 
         /* Set the values that the user is not allowed to change */
@@ -155,6 +160,11 @@ public class InstanceService {
         emitNewEvent("stop", instanceDto.getId());
     }
 
+    public void restartInstance(String instanceId) {
+        stopInstance(instanceId);
+        startInstance(instanceId);
+    }
+
     public void pauseInstance(String instanceId) {
         InstanceDto instanceDto = findById(instanceId);
 
@@ -183,6 +193,12 @@ public class InstanceService {
         instanceDto = save(instanceDto);
 
         emitNewEvent("resume", instanceDto.getId());
+    }
+
+    public InstanceDto requireRestart(String id) {
+        InstanceDto instanceDto = findById(id);
+        instanceDto.setRestartRequired(true);
+        return updateById(id, instanceDto);
     }
 
     @SuppressWarnings("Duplicates")
@@ -243,6 +259,17 @@ public class InstanceService {
         return Collections.emptyList();
     }
 
+    public List<InstanceDto> findInstancesByEntryListId(String entryListId) {
+        Optional<List<Instance>> optionalInstances = instanceRepository.findAllByEntryList_Id(entryListId);
+
+        if (optionalInstances.isPresent()) {
+            List<Instance> matchingInstances = optionalInstances.get();
+            return convertToDto(matchingInstances);
+        }
+
+        return Collections.emptyList();
+    }
+
     public InstanceDto findByName(String name) {
         Instance instance = instanceRepository.findByName(name).orElseThrow(NotFoundException::new);
         return convertToDto(instance);
@@ -254,6 +281,10 @@ public class InstanceService {
 
     public boolean isEventInUse(String eventId) {
         return !findInstancesByEventId(eventId).isEmpty();
+    }
+
+    public boolean isEntryListInUse(String entryListId) {
+        return !findInstancesByEntryListId(entryListId).isEmpty();
     }
 
     private List<InstanceDto> getInstancesByPorts(int tcpPort, int udpPort) {

@@ -12,6 +12,8 @@ public interface InstanceRepository extends MongoRepository<Instance, String> {
 
     Optional<List<Instance>> findAllByEvent_Id(String eventId);
 
+    Optional<List<Instance>> findAllByEntryList_Id(String entryListId);
+
     Optional<List<Instance>> findAllByConfiguration_TcpPortOrConfiguration_UdpPort(int tcpPort, int udpPort);
 
     Optional<List<Instance>> findAllByState(InstanceState state);

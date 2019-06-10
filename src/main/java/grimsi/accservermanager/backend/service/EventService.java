@@ -35,7 +35,6 @@ public class EventService {
     @Autowired
     Gson gson;
 
-
     private List<SseEmitter> sseEmitters = new ArrayList<>();
 
     public List<EventDto> findAll() {
@@ -67,10 +66,9 @@ public class EventService {
         eventDto.setId(id);
 
         /* Set the restart required flag for all instances that use this event */
-        instanceService.findInstancesByEventId(id).forEach(i -> {
-            i.setRestartRequired(true);
-            instanceService.updateById(i.getId(), i);
-        });
+        instanceService.findInstancesByEventId(id).forEach(
+                i -> instanceService.requireRestart(i.getId())
+        );
 
         eventDto = save(eventDto);
         emitNewEvent("update", gson.toJson(eventDto));

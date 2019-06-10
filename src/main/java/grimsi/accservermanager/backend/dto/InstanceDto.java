@@ -1,6 +1,7 @@
 package grimsi.accservermanager.backend.dto;
 
 import grimsi.accservermanager.backend.annotation.ValidAccVersion;
+import grimsi.accservermanager.backend.annotation.ValidEntryListId;
 import grimsi.accservermanager.backend.annotation.ValidEventId;
 import grimsi.accservermanager.backend.enums.InstanceState;
 import lombok.AllArgsConstructor;
@@ -48,4 +49,7 @@ public class InstanceDto {
     @NotNull(message = "event is required.")
     @ValidEventId
     private EventDto event;
+
+    @ValidEntryListId
+    private EntryListDto entryList;
 }

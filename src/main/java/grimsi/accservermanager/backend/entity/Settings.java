@@ -14,5 +14,7 @@ public class Settings {
     private int trackMedalsRequirement;
     private int safetyRatingRequirement;
     private int racecraftRatingRequirement;
+    private int dumpLeaderboards; //is bool
+    private int isRaceLocked; //is bool
     private int configVersion = 1;
 }

@@ -1,6 +1,6 @@
 package grimsi.accservermanager.backend.dto;
 
-import grimsi.accservermanager.backend.enums.Car;
+import grimsi.accservermanager.backend.enums.CarModel;
 import grimsi.accservermanager.backend.enums.Track;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,10 +16,10 @@ import java.util.List;
 public class InstanceStatsDto {
     private int maxPlayerCount;
     private int currentPlayerCount;
-    private List<PlayerDto> currentPlayers;
+    private List<DriverDto> currentPlayers;
     private List<LeaderboardRankDto> leaderboard;
     private Track currentTrack;
     private List<Track> tracks;
     private Track nextTrack;
-    private List<Car> cars;
+    private List<CarModel> cars;
 }

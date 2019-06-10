@@ -46,4 +46,14 @@ public class SettingsDto {
     @Min(value = -1, message = "racecraftRatingRequirement has to be between -1 and 99.")
     @Max(value = 99, message = "racecraftRatingRequirement has to be between -1 and 99.")
     private int racecraftRatingRequirement;
+
+    @NotNull(message = "dumpLeaderboards is required.")
+    @Min(value = 0, message = "dumpLeaderboards can only be 0 or 1.")
+    @Max(value = 1, message = "dumpLeaderboards can only be 0 or 1.")
+    private int dumpLeaderboards;
+
+    @NotNull(message = "isRaceLocked is required.")
+    @Min(value = 0, message = "isRaceLocked can only be 0 or 1.")
+    @Max(value = 1, message = "isRaceLocked can only be 0 or 1.")
+    private int isRaceLocked;
 }

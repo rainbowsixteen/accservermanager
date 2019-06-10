@@ -1,6 +1,5 @@
 package grimsi.accservermanager.backend.dto;
 
-import grimsi.accservermanager.backend.dto.PlayerDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LeaderboardRankDto {
-    private PlayerDto player;
+    private DriverDto player;
     private int rank;
     private float bestTime;
 }

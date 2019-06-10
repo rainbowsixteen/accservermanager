@@ -38,6 +38,8 @@ public class FileSystemService {
     private final String CONFIGURATION_JSON = "configuration.json";
     private final String EVENT_JSON = "event.json";
     private final String SETTINGS_JSON = "settings.json";
+    private final String RESULTS_FOLDER = "results";
+
     @Autowired
     ApplicationConfiguration config;
     private Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -97,6 +99,7 @@ public class FileSystemService {
             copyServerExecutable(serverRootFolder, instanceFolder, instance.getVersion());
             createLogFolder(instanceFolder);
             createCfgFolder(instanceFolder, instance);
+            createResultsFolder(instanceFolder);
 
         } catch (IOException e) {
             throw new CouldNotCreateFolderException(instanceFolder.toPath());
@@ -216,6 +219,14 @@ public class FileSystemService {
         if (eventJson.createNewFile()) {
             writeFile(eventJson, gson.toJson(instance.getEvent()));
             log.debug("Created event.json in '" + eventJson.getAbsolutePath() + "'.");
+        }
+    }
+
+    private void createResultsFolder(File instanceFolder) throws IOException {
+        File resultsFolder = new File(instanceFolder.getAbsolutePath() + File.separator + RESULTS_FOLDER);
+
+        if (resultsFolder.mkdirs()) {
+            log.debug("Created results folder in '" + instanceFolder + "'.");
         }
     }
 

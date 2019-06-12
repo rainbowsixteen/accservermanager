@@ -17,10 +17,14 @@ import java.util.List;
 public class EntryDto {
     private final int configVersion = 0;
     private List<DriverDto> drivers;
-    private String customCar;
     private int raceNumber;
-    private int defaultGridPosition;
     private CarModel forcedCarModel;
     private int overrideDriverInfo; //is a boolean, only 0 and 1
     private int isServerAdmin; //is a boolean, only 0 and 1
+
+    /*
+    --- Not implemented/supported ---
+    private String customCar;
+    private int defaultGridPosition;
+     */
 }
